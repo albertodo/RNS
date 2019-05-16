@@ -1,0 +1,134 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<xsd:element name = "places">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref = "place" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+	 
+<xsd:element name = "place">
+<xsd:complexType> 
+	<xsd:sequence>
+		<xsd:element name = "connections" type = "xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:choice>
+			<xsd:element name = "roadSegment" type = "roadSegmentType"/>
+			<xsd:element name ="parkingArea" type = "parkingAreaType"/>
+			<xsd:element name = "gate" type = "gateType"/>
+		</xsd:choice>	
+	</xsd:sequence>
+	<xsd:attribute name = "id" type = "xsd:string" use = "required"/>
+	<xsd:attribute name = "capacity" type = "xsd:positiveInteger" use = "required"/>
+</xsd:complexType>
+</xsd:element>
+
+
+<xsd:complexType name = "roadType">
+	<xsd:sequence>
+		<xsd:element name = "roadSegment" type = "roadSegmentType2" minOccurs="1" maxOccurs="unbounded"/>
+	</xsd:sequence>
+	<xsd:attribute name = "name" type = "xsd:string" use = "required"/>
+</xsd:complexType>
+
+
+
+<xsd:complexType name = "roadSegmentType2">
+	<xsd:attribute name = "name" type = "xsd:string" use = "required"/>
+</xsd:complexType>
+
+
+<xsd:complexType name="connectionType">
+	<xsd:attribute name = "connectedTo" type = "xsd:string" use = "required"/>
+</xsd:complexType>
+
+<xsd:complexType name="parkingAreaType">
+	<xsd:sequence>
+		<xsd:element name = "service" type = "serviceType" minOccurs="0" maxOccurs="unbounded"/>	
+	</xsd:sequence>	
+
+</xsd:complexType>
+
+<xsd:complexType name = "serviceType">
+	<xsd:attribute name = "serviceName" type = "xsd:string"/>
+</xsd:complexType>
+
+<xsd:simpleType name="gateType">
+	<xsd:restriction base = "xsd:string">
+		<xsd:enumeration value="IN"></xsd:enumeration>
+		<xsd:enumeration value="OUT"></xsd:enumeration>
+		<xsd:enumeration value="INOUT"></xsd:enumeration>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:element name = "vehicles">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref = "vehicle" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+<xsd:element name = "vehicle">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name = "state" type = "stateType"/>
+			<xsd:element name = "type" type = "typeType"/>
+			<xsd:element ref = "suggestedPath" minOccurs="0"/>
+			<!-- <xsd:element name = "suggestedPath" type = "xsd:string" minOccurs="0" maxOccurs="unbounded"/>   -->
+			<xsd:element name = "self" type = "xsd:anyURI"/>
+		</xsd:sequence>
+		<xsd:attribute name = "entryTime" type = "xsd:dateTime" use = "required"/>
+		<xsd:attribute name ="isInPlace" type = "xsd:string" use = "required"/>
+		<xsd:attribute name = "comesFrom" type = "xsd:string" use = "required"/>
+		<xsd:attribute name = "goesTo" type = "xsd:string" use = "required"/>
+		<xsd:attribute name = "id" type = "xsd:string" use = "required"/>
+	</xsd:complexType>
+</xsd:element>
+  
+<xsd:element name = "suggestedPath">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name = "node" type = "xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+<xsd:simpleType name="stateType">
+	<xsd:restriction base = "xsd:string">
+		<xsd:enumeration value="PARKED"></xsd:enumeration>
+		<xsd:enumeration value="IN_TRANSIT"></xsd:enumeration>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="typeType">
+	<xsd:restriction base = "xsd:string">
+		<xsd:enumeration value="CAR"></xsd:enumeration>
+		<xsd:enumeration value="TRUCK"></xsd:enumeration>
+		<xsd:enumeration value="SHUTTLE"></xsd:enumeration>
+		<xsd:enumeration value="CARAVAN"></xsd:enumeration>
+	</xsd:restriction>
+</xsd:simpleType>
+
+
+<xsd:complexType name = "roadSegmentType">
+	<xsd:attribute name = "name" type = "xsd:string" use = "required"/>
+	<xsd:attribute name = "road" type = "xsd:string" use = "required"/>
+</xsd:complexType>
+
+<xsd:element name = "responseBody">
+	<xsd:complexType>
+		<xsd:attribute name = "message" type = "xsd:string"/>
+	</xsd:complexType>
+</xsd:element>
+
+<xsd:element name="putRequest">
+	<xsd:complexType>
+		<xsd:attribute name = "typeOfRequest" type = "xsd:string"/>
+		<xsd:attribute name = "value" type = "xsd:string"/>
+	</xsd:complexType>
+</xsd:element>
+
+
+</xsd:schema>

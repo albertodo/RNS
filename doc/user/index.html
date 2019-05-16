@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Service API</title>
+	</head>
+	<body>
+
+		<style>
+			table  {
+				border-collapse:collapse
+			}
+			td, th {
+				border:5px solid #ddd;
+				padding:8px;
+			}
+		</style>
+		<br>A representation of hierarchical structure of the service is available <a href = "./../design/index.html">here</a><br>
+		<br>For <strong>PutRequest</strong> and <strong>ResponseBody</strong> objects see this  <a href = "./../impl/index.html">page</a><br><br>
+		<table>
+			<thead>
+				<tr><th>Resource</th><th>Method</th><th>Req Body (XML/JSON)</th><th colspan="2">Status</th><th>Response body (XML/JSON)</th><th>Notes</th></tr>
+			</thead>
+
+			<tr>
+				<td rowspan="2">rns/places</td>
+				<td rowspan="2">GET</td>
+				<td rowspan="2"></td>
+				<td>200</td>
+				<td>OK</td>
+				<td>Places</td>
+				<td>All places in the system</td>
+				<tr>
+					<td>500</td>
+					<td>INTERNAL SERVER ERROR</td>
+					<td></td>
+				<td></td>
+			</tr>
+				
+
+			<tr>
+				<td rowspan="3">rns/places/{id}</td>
+				<td rowspan="3">GET</td>
+				<td rowspan="3"></td>
+				<td>200</td>
+				<td>OK</td>
+				<td>Place</td>
+				<td>The place with the id specified</td>
+			</tr>
+			<tr>
+				<td>404</td>
+				<td>NOT FOUND</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>500</td>
+				<td>INTERNAL SERVER ERROR</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td rowspan="3">rns/places/{id}/vehicles</td>
+				<td rowspan="3">GET</td>
+				<td rowspan="3"></td>
+				<td>200</td>
+				<td>OK</td>
+				<td>Vehicles</td>
+				<td>All tracked vehicles in place with id specified</td>
+			</tr>
+			<tr>
+				<td>404</td>
+				<td>NOT FOUND</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>500</td>
+				<td>INTERNAL SERVER ERROR</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td rowspan="2">rns/vehicles</td>
+				<td rowspan="2">GET</td>
+				<td rowspan="2"></td>
+				<td>200</td>
+				<td>OK</td>
+				<td>Vehicles</td>
+				<td>All tracked vehicles in the system</td>
+			</tr>
+			<tr>
+				<td>500</td>
+				<td>INTERNAL SERVER ERROR</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td rowspan="3">rns/vehicles/{id}</td>
+				<td rowspan="3">GET</td>
+				<td rowspan="3"></td>
+				<td>200</td>
+				<td>OK</td>
+				<td>Vehicle</td>
+				<td>The vehicle with specified id</td>
+			</tr>
+			<tr>
+				<td>404</td>
+				<td>NOT FOUND</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>500</td>
+				<td>INTERNAL SERVER ERROR</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td rowspan="3">rns/vehicles</td>
+				<td rowspan="3">POST</td>
+				<td rowspan="3">Vehicle</td>
+				<td>201</td>
+				<td>CREATED</td>
+				<td>Vehicle</td>
+				<td>Vehicle created with id specified and new suggested path calculated.<br>
+				In the HTTP location header there is the URI to the created resource</td>
+			</tr>
+			<tr>
+				<td>400</td>
+				<td>BAD REQUEST</td>
+				<td>ResponseBody</td>
+				<td>In the message attribute of ResponseBody there is a string to understand what was the error</td>
+			</tr>
+			<tr>
+				<td>500</td>
+				<td>INTERNAL SERVER ERROR</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td rowspan="5">rns/vehicles/{id}</td>
+				<td rowspan="5">PUT</td>
+				<td rowspan="5">PutRequest</td>
+				<td>201</td>
+				<td>CREATED</td>
+				<td>Vehicle</td>
+				<td>vehicle with new suggested path calculated</td>
+				
+			</tr>
+			<tr>
+				<td>204</td>
+				<td>NO CONTENT</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>400</td>
+				<td>BAD REQUEST</td>
+				<td>ResponseBody</td>
+				<td>In the message attribute of ResponseBody there is a string to understand what was the error</td>
+			</tr>
+			<tr>
+				<td>404</td>
+				<td>NOT FOUND</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>500</td>
+				<td>INTERNAL SERVER ERROR</td>
+				<td></td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td rowspan="3">rns/vehicles/{id}</td>
+				<td rowspan="3">DELETE</td>
+				<td rowspan="3"></td>
+				<td>204</td>
+				<td>NO CONTENT</td>
+				<td></td>
+				<td></td>
+				
+			</tr>
+			<tr>
+				<td>404</td>
+				<td>NOT FOUND</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>500</td>
+				<td>INTERNAL SERVER ERROR</td>
+				<td></td>
+				<td></td>
+			</tr>
+			
+		</table>
+
+	</body>
+</html>

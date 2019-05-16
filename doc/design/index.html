@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Design</title>
+	</head>
+	<body>
+	<h1>Hierarchical structure</h1>
+	<p>
+		<img alt="Design" src="photo.png" width = "900" height = "700">
+	</p>
+	
+	<h1> Design choices</h1>
+	<p>
+		In my design the main resource is rns, then I have 2 sub-resources that are places and vehicles. 
+		From both of them is it possible to access a single place or vehicle specifying the proper id in the path and perform some operation on them. 
+		Moreover from rns/places/{id} is it possible to access all tracked vehicles in that place by following the uri 'rns/places/{id}/vehicles'.
+		All the decisions were taken according to the given specifications.
+		In my design there is not data replication and it respects the minimization of number of interaction with the server.<br>
+		For more informations about allowed methods on resources (and relative request/response body) please follow this <a href = "./../user/index.html">link</a><br>
+	</p>
+	</body>
+</html>

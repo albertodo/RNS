@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Schema" xmlns:tns="http://www.example.org/Schema" elementFormDefault="qualified">
+
+<element name = "result">
+	<complexType>
+		<sequence>
+			<element ref = "tns:paths" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+</element>
+
+<element name="paths">
+	<complexType>
+	<sequence>
+		<element name = "nodes" type = "anyURI" minOccurs="0" maxOccurs="unbounded"/>
+	</sequence>
+	</complexType>
+</element>
+
+<element name = "node">
+	<complexType>
+		<sequence>
+			<element name = "id" type ="string"/>
+		</sequence>
+	</complexType>
+</element>
+
+<element name = "connection">
+	<complexType>
+		<sequence>
+			<element name = "type" type="string" default="ConnectedTo"/>
+			<element name = "to" type ="anyURI"/>
+		</sequence>
+	</complexType>
+</element>
+
+<element name = "request">
+	<complexType>
+		<sequence>
+			<element name = "to" type ="anyURI"/>
+			<element name = "max_depth" type="positiveInteger"/>
+			<element ref = "tns:relationships"/>
+			<element name = "algorithm" type ="string" default = "shortestPath"/>
+			
+		</sequence>
+	</complexType>
+</element>
+
+<element name="relationships">
+	<complexType>
+	<sequence>
+		<element name = "type" type = "string" default = "ConnectedTo"/>
+		<element name = "direction" type = "string" default = "out"/>
+	</sequence>
+	</complexType>
+</element>
+
+
+
+	
+	
+</schema>

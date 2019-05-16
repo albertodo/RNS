@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="build-service" name="SOL_BUILD">
+	<description>
+			sol_build script for assignment 3
+	</description>
+	
+	<property name = "basedir" value = "."/>
+	<property name = "debug" value = "true"/>
+	<property name = "debuglevel" value="source,lines,vars" />
+	<property name = "target" value="1.8" /> 
+	<property name = "source" value="1.8" /> 
+	<property name = "src.dir" location="${basedir}/src" />
+	<property name = "gen.dir" location="${basedir}/gen-src" />
+	<property name="lib.dir" location="${basedir}/lib" />
+	<property name="shared.location" location="/opt/dp2/shared"/>
+	<property name="ext.lib.dir" location="${shared.location}/lib" />
+	
+	<target name = "init">
+		<mkdir dir="${basedir}/gen-src"/>
+	</target>
+	
+	<!-- Generate artifacts -->
+	<target name="generate-artifacts" depends="init">
+		<mkdir dir="gen-src"/>
+		<exec executable="xjc" failonerror="true" >
+			<arg value="-d" />
+			<arg value="gen-src" />
+			<arg value="-p" />
+			<arg value="it.polito.dp2.RNS.sol3.jaxb" />
+			<arg value="${basedir}/xsd/RnsSystem.xsd" />
+		</exec>
+	</target>
+	
+	<!-- Generate neo4j classes -->
+	<target name="generate-neo4j-classes" depends="init">
+			<exec executable="xjc" failonerror="true" >
+				<arg value="-d" />
+				<arg value="gen-src" />
+				<arg value="-p" />
+				<arg value="it.polito.dp2.RNS.sol3.jaxb.neo4j" />
+				<arg value="${basedir}/custom/Schema.xsd" />
+			</exec>
+	</target>
+	
+	<!-- The classpath to be used for compilation of the solution -->
+	<path id="sol.classpath">
+		<pathelement location="${lib.dir}/hamcrest-core-1.3.jar"/>
+		<pathelement location="${lib.dir}/junit-4.12.jar"/>
+		<pathelement location="${lib.dir}/RNS.jar"/>
+		<pathelement location="${lib.dir}/lab3.jar"/>
+		<pathelement location="${lib.dir}/lab1.jar"/>
+		<pathelement location="${lib.dir}/RNSRandom.jar"/>
+		<pathelement location="${lib.dir}/swagger-annotations-1.5.0.jar"/>
+		<pathelement location="${lib.dir}/swagger-core-1.5.0.jar"/>
+		<pathelement location="${lib.dir}/swagger-jaxrs-1.5.0.jar"/>
+		<pathelement location="${lib.dir}/swagger-jersey2-1.5.0.jar"/>
+		<pathelement location="${lib.dir}/swagger-models-1.5.0.jar"/>
+		<fileset dir="${ext.lib.dir}">
+		    <include name="*.jar" />
+			<exclude name="ant-*.jar"/>
+		</fileset>
+	</path>
+	
+	<!-- Service build -->
+	<target name="build-service" depends="generate-artifacts, generate-neo4j-classes" description="Build the service">
+		<echo>Qua devo creare i file *.class e salvarli in [root]/build</echo>
+		<javac 
+			destdir="${basedir}/build"
+			debug="${debug}"
+			debuglevel="${debuglevel}"
+			source="${source}"
+			target="${target}"
+			includeantruntime="false">
+				<src path="${src.dir}"/>
+				<src path="${gen.dir}"/>
+				<include name="it/polito/dp2/RNS/sol3/service/**" />
+				<include name="it/polito/dp2/RNS/sol3/jaxb/**" />
+				<classpath>
+					<path refid="sol.classpath" /> 
+				</classpath>
+		</javac>
+		<echo>Done.</echo>
+	</target>
+	
+	<!-- Client build -->
+	<target name="build-client" depends="build-service" description="Build the client">
+		<echo>Qua devo creare i file *.class e salvarli in [root]/build</echo>
+		<javac 
+			destdir="${basedir}/build"
+			debug="${debug}"
+			debuglevel="${debuglevel}"
+			source="${source}"
+			target="${target}"
+			includeantruntime="false">
+				<src path="${src.dir}"/>
+				<src path="${gen.dir}"/>
+				<include name="it/polito/dp2/RNS/sol3/admClient/**" />
+				<include name="it/polito/dp2/RNS/sol3/vehClient/**" />
+				<include name="it/polito/dp2/RNS/sol3/jaxb/**" />
+				<classpath>
+					<path refid="sol.classpath" /> 
+				</classpath>
+		</javac>
+		<echo>Done.</echo>
+	</target>
+	
+
+</project>
